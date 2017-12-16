@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Анимация в браузере</title>
+
+		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+		<meta name="author" content="antonk52">
+
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="../node_modules/reveal.js/css/reveal.css">
+		<link rel="stylesheet" href="../node_modules/reveal.js/css/theme/black.css" id="theme">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="../node_modules/reveal.js/lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? '../node_modules/reveal.js/css/print/pdf.css' : '../node_modules/reveal.js/css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+
+		<style>
+			pre code {
+				font-size: 1.2em !important;
+				line-height: 1.2em !important;
+			}
+		</style>
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<section>
+					<h1>Анимация в браузере</h1>
+					<h2>60 FPS</h2>
+					<small>Без регистрации и СМС</small>
+				</section>
+
+				<section>
+					<h3>Антон Кастрицкий</h3>
+					<p class="fragment">Веб разработчик</p>
+					<p class="fragment">@antonk52</p>
+				</section>
+
+				<section>
+					<h3>Анимация</h3>
+					<p>Что это такое и с чем ее едят?</p>
+				</section>
+
+				<section>
+					<h3>Зачем анимировать?</h3>
+					<ul>
+						<li class="fragment">Помощь интерактивности</li>
+						<li class="fragment">Декоративность</li>
+					</ul>
+				</section>
+
+				<section>
+					<h3 style="padding-bottom: 100px;">Что анимировать не стоит</h3>
+					<div style="position: absolute; top: 0; right: 0; bottom: 0; left: 0; background-image: url(/slides/img/snow.gif); z-index: -1; min-width: 100%; min-height: 100%;" class="fragment"></div>
+				</section>
+
+				<section>
+					<h2>У меня есть проблема</h2>
+					<aside class="notes">
+						<p>Злоупотребление, плохие практики и плохой UX</p>
+					</aside>
+				</section>
+
+				<section>
+					<section>
+						<h3>Анимация в браузере</h3>
+					</section>
+					<section>
+						<h3>Как анимировать</h3>
+						<ul>
+							<li class="fragment">CSS</li>
+							<li class="fragment">JS</li>
+							<li class="fragment">HTML</li>
+							<li class="fragment">Картинки</li>
+						</ul>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h3>Производительность</h3>
+						<blockquote class="fragment" cite="https://developers.google.com/web/fundamentals/performance/rendering/">
+							&ldquo;Производительность это исскуство избегать работу&ldquo;<br>
+							Пол Люис
+						</blockquote>
+					</section>
+					<section>
+						<h3>Как измерить производительность анимации?</h3>
+						<p class="fragment">Количество кадров в секунду</p>
+					</section>
+					<section>
+						<ul>
+							<li>60 кадров в секунду</li>
+						</ul>
+						<aside class="notes">
+							<ul>
+								<li>почему 60fps</li>
+								<li>120 fps on newer ipad works only with css animations, requestAnimationFrame is capped at 60fps</li>
+							</ul>
+						</aside>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h3>Рендеринг в браузере</h3>
+					</section>
+					<section>
+						<img src="/slides/img/frame-full.jpg">
+					</section>
+					<section>
+						<h2>Можем ли мы избежать часть работы?</h2>
+						<p class="fragment"><a href="http://csstriggers.com" target="_blank">csstriggers.com</a> от Пола Люиса</p>
+						<p class="fragment"><a href="https://gist.github.com/paulirish/5d52fb081b3570c81e3a" target="_blank">gist</a> от Пола Айриша</p>
+					</section>
+					<section>
+						<img src="/slides/img/frame-no-layout.jpg">
+					</section>
+					<section>
+						<img src="/slides/img/frame-no-layout-paint.jpg">
+					</section>
+				</section>
+
+				<section>
+					<h2>CSS</h2>
+					<ul>
+						<li class="fragment"><code>Transform</code> - <a href="https://caniuse.com/#feat=transforms2d">caniuse</a></li>
+						<li class="fragment"><code>Opacity</code> - <a href="https://caniuse.com/#feat=css-opacity">caniuse</a></li>
+					</ul>
+				</section>
+
+				<section>
+					<section>
+						<h2>will-change</h2>
+						<pre class="fragment"><code class="hl css">.my-element {
+  will-change: thansform, opacity;
+}</code></pre>
+						<a href="https://caniuse.com/#feat=will-change">caniuse</a>
+						<aside class="notes">
+							<p>Создает отдельный слой для элемента</p>
+						</aside>
+					</section>
+					<section>
+						<h3 style="color: red;">КАК ДЕЛАТЬ НЕ СТОИТ</h3>
+<pre><code class="hl css">* {
+  will-change: all;
+}</code></pre>
+					</section>
+					<section>
+						<h5>Как это выглядело раньше</h5>
+						<pre><code class="hl css">.my-element {
+  transform: translate3d(0, 0, 0);
+}</code></pre>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h2>JS</h2>
+						<ul>
+							<li class="fragment">Debouncing</li>
+							<li class="fragment">Throttling</li>
+							<li class="fragment"><code>requestAnimationFrame()</code></li>
+							<li class="fragment"><code>requestIdleCallback()</code></li>
+							<li class="fragment">Пассивные события</li>
+							<li class="fragment">Веб воркеры</li>
+						</ul>
+					</section>
+					<section>
+						<h2>Debouncing, throttling &amp; rAf</h2>
+						<p><a href="https://codepen.io/antonk52/full/rpBOGR/" target="_blank">Пример</a></p>
+						<p><a href="https://caniuse.com/#feat=requestanimationframe" target="_blank">caniuse</a></p>
+						<aside class="notes">
+							<p>raf - нативный, debouncing &amp; throttling могут быть заимствованны из популярных библиотик как lodash</p>
+						</aside>
+					</section>
+					<section>
+						<h2><code>requestIdleCallback()</code></h2>
+						<a href="https://caniuse.com/#feat=requestidlecallback">caniuse</a>
+						<aside class="notes">
+							<p>Вызывает передаваемую функцию в конце кадра* при наличии свободного времени</p>
+						</aside>
+					</section>
+					<section>
+						<h2>Пассивные события</h2>
+						<pre><code class="hljs javascript">element.addEventListener('event', callback, {passive: true});</code></pre>
+						<ul class="fragment">
+							<li>wheel</li>
+							<li>touchstart</li>
+							<li>touchend</li>
+						</ul>
+						<iframe class="devsite-embedded-youtube-video" data-autohide="1" data-showinfo="0" frameborder="0" allowfullscreen="" id="ytplayer0" data-enablejsapi="1" src="//www.youtube.com/embed/65VMej8n23A?autohide=1&amp;showinfo=0&amp;enablejsapi=1" origin="https://developers.google.com"></iframe>
+						<aside class="notes">
+							<p>Заранее сообщает браузеру что вы не собираетесь вызывать `e.preventDefault()` внутри колбэка</p>
+						</aside>
+					</section>
+					<section>
+						<h2>Веб воркеры</h2>
+						<a href="https://caniuse.com/#feat=webworkers" target="_blank">caniuse</a>
+						<aside class="notes">
+							<p>Позволяет выполнять затратные операции вне основного пока, не имеет дотупа к ДОМу</p>
+						</aside>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h2>Бонус</h2>
+					</section>
+					<section>
+						<h2>Web Animations API</h2>
+						<pre><code class="hl javascript">document.getElementById("alice").animate(
+	  [
+	    { transform: 'rotate(0) translate3D(-50%, -50%, 0)', color: '#000' },
+	    { color: '#431236', offset: 0.3},
+	    { transform: 'rotate(360deg) translate3D(-50%, -50%, 0)', color: '#000' }
+	  ], 3000);</code></pre>
+						<a href="https://caniuse.com/#feat=web-animation" target="_blank">caniuse</a>
+					</section>
+					<section>
+						<h2>Houdini</h2>
+						<ul>
+							<li>Layout worklet</li>
+							<li>Paint worklet</li>
+							<li>Animation worklet aka Compositor worklet</li>
+							<li>Typed CSSOM</li>
+							<li>Properties and values</li>
+							<li>...</li>
+						</ul>
+						<aside class="notes">
+							<p>Разработчики из Mozilla, Apple, Opera, Microsoft, HP, Intel and Google</p>
+						</aside>
+					</section>
+				</section>
+
+				<section>
+					<h2>120fps?</h2>
+				</section>
+
+				<section id="themes">
+					<h2>Ссылки</h2>
+					<a href="https://github.com/antonk52/browser-animation-talk/">github.com/antonk52/browser-animation-talk</a>
+					<small>
+						<ul>
+							<li><a target="_blank" href="https://developers.google.com/web/fundamentals/performance/rendering/">Rendering Performance</a></li>
+							<li><a target="_blank" href="https://csstriggers.com/">CSSTriggers.com</a></li>
+							<li><a target="_blank" href="https://gist.github.com/paulirish/5d52fb081b3570c81e3a">What forces layout / reflow - gist</a></li>
+							<li><a target="_blank" href="https://developers.google.com/web/updates/2016/06/passive-event-listeners">Improving Scroll Performance with Passive Event Listeners</a></li>
+							<li><a target="_blank" href="https://medium.com/@devlucky/about-passive-event-listeners-224ff620e68c">About passive event listeners</a></li>
+							<li><a target="_blank" href="https://dev.opera.com/articles/css-will-change-property/">Everything You Need to Know About the CSS will-change Property</a></li>
+							<li><a target="_blank" href="https://medium.com/@paul_irish/requestanimationframe-scheduling-for-nerds-9c57f7438ef4">requestAnimationFrame Scheduling For Nerds</a></li>
+							<li><a target="_blank" href="https://developers.google.com/web/updates/2015/08/using-requestidlecallback">Using requestIdleCallback</a></li>
+							<li><a href="https://css-tricks.com/debouncing-throttling-explained-examples/" target="_blank">Debouncing and Throttling Explained Through Examples</a></li>
+							<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers">Using Web Workers</a></li>
+							<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Animations_API/Using_the_Web_Animations_API">Using the Web Animations API</a></li>
+							<li><a target="_blank" href="https://dassur.ma/things/120fps/">120fps and no jank</a></li>
+							<li><a target="_blank" href="https://developers.google.com/web/updates/2016/05/houdini">Houdini: Demystifying CSS</a></li>
+							<li><a target="_blank" href="https://ishoudinireadyyet.com/">Is Houdini ready yet‽</a></li>
+						</ul>
+					</small>
+				</section>
+
+				<section>
+					<h2><a href="/example/" target="_blank">Практический пример</a></h2>
+				</section>
+
+			</div>
+
+		</div>
+
+		<script src="../node_modules/reveal.js/lib/js/head.min.js"></script>
+		<script src="../node_modules/reveal.js/js/reveal.js"></script>
+
+		<script>
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+				transition: 'slide',
+				dependencies: [
+					{ src: '../node_modules/reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: '../node_modules/reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: '../node_modules/reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: '../node_modules/reveal.js/plugin/notes/notes.js', async: true }
+				]
+			});
+		</script>
+
+	</body>
+</html>

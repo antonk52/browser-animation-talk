@@ -1,0 +1,17 @@
+{
+  "name": "browser-animation-talk",
+  "version": "1.0.0",
+  "description": "Presentation slides and coding example",
+  "main": "index.js",
+  "scripts": {
+    "start": "lr-http-server",
+    "test": "echo \"lol\" && exit 1"
+  },
+  "author": "antonk52",
+  "license": "ISC",
+  "dependencies": {
+    "lodash": "^4.17.4",
+    "lr-http-server": "^0.1.5",
+    "reveal.js": "^3.6.0"
+  }
+}

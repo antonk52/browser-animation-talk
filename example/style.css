@@ -1,0 +1,80 @@
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: #eee;
+  font-family: Helvetica, Roboto, Arial, sans-serif;
+}
+
+.main-header {
+  width: 100%;
+  height: 100px;
+  position: fixed;
+  padding: 10px 0;
+  top: 0;
+  left: 0;
+}
+
+.main-header__logo {
+  max-width: 100%;
+  width: 100px;
+  height: 100%;
+  display: block;
+  margin: auto;
+  position: relative;
+  z-index: 2;
+  will-change: transform;
+}
+
+.hero-section {
+  width: 100vw;
+  height: 100vh;
+  background: #f7df1e;
+}
+
+main {
+  display: block;
+  width: 90%;
+  max-width: 700px;
+  margin: 50px auto;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.main-header__bg {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 1;
+  background: #fff;
+  will-change: opacity;
+}
